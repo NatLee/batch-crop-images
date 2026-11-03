@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "batch-crop-images"
+dynamic = ["version"]
+description = "Draw a crop box once and crop a whole folder of images the same way."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Nat Lee", email = "natlee.work@gmail.com" }]
+requires-python = ">=3.10"
+dependencies = [
+    "opencv-python>=4.5",
+    "numpy>=1.23",
+    "pillow>=10.1",
+]
+keywords = ["crop", "image", "batch", "opencv", "pillow", "dataset"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Multimedia :: Graphics",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/NatLee/batch-crop-images"
+Issues = "https://github.com/NatLee/batch-crop-images/issues"
+
+[project.scripts]
+batch-crop = "batch_crop.cli:main"
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+lint = ["ruff>=0.14", "mypy>=1.18"]
+
+[tool.setuptools.dynamic]
+version = { attr = "batch_crop.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+batch_crop = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["gui: drives the real crop window; needs a display (run tests/gui/run.sh)"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src"]
