@@ -60,8 +60,18 @@ class Xdotool:
         time.sleep(0.2)
 
     def keys(self, *names: str) -> None:
-        self._run("key", "--window", self.window, "--delay", "80", *names)
+        try:
+            self._run("key", "--window", self.window, "--delay", "80", *names)
+        except subprocess.CalledProcessError:
+            # Enter, Esc and q close the window on the key press, so xdotool may fail to send the
+            # key release to a window that is already gone. Only a window that is still there is a failure.
+            if self._exists():
+                raise
         time.sleep(0.2)
+
+    def _exists(self) -> bool:
+        found = subprocess.run(["xdotool", "getwindowname", self.window], capture_output=True, timeout=WAIT)
+        return found.returncode == 0
 
     def type(self, text: str) -> None:
         self._run("type", "--window", self.window, "--delay", "80", text)
