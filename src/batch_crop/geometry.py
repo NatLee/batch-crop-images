@@ -131,7 +131,7 @@ class AspectRatio:
 
     def __str__(self) -> str:
         def number(value: float) -> str:
-            return str(int(value)) if value.is_integer() else f"{value:g}"
+            return str(int(value)) if float(value).is_integer() else f"{value:g}"
 
         return f"{number(self.width)}:{number(self.height)}"
 
