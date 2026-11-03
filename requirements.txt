@@ -1,2 +1,3 @@
-opencv-python
-numpy
+# Kept for the original instructions ("pip install -r requirements.txt", then "python main.py ...").
+# It installs this project and its dependencies, which are listed once, in pyproject.toml.
+.
